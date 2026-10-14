@@ -2,9 +2,6 @@
 
 Technical books and articles I have read. Each PDF is committed once read.
 
-File names: `<author-full-name>-<title>-<year>.pdf`, lowercase, words separated by dashes,
-e.g. `robert-c-martin-the-clean-coder-2011.pdf`.
-
 ## Books
 
 | Title | Author | Year |
