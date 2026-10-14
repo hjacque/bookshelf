@@ -9,7 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - run: python3 scripts/build_readme.py --check
+      - name: Every PDF is linked in README.md, and every linked PDF exists
+        run: |
+          status=0
+          for f in $(git ls-files '*.pdf'); do
+            grep -qF "]($f)" README.md || { echo "::error::$f is not linked in README.md"; status=1; }
+          done
+          for f in $(grep -o '](\([^)]*\.pdf\))' README.md | sed 's/^](//; s/)$//'); do
+            git ls-files --error-unmatch "$f" >/dev/null 2>&1 || { echo "::error::README.md links missing file $f"; status=1; }
+          done
+          exit $status
