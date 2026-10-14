@@ -1,0 +1,6 @@
+#!/bin/sh
+# Regenerate README.md from catalog.json and stage it, so it never drifts from the committed PDFs.
+set -e
+cd "$(git rev-parse --show-toplevel)"
+python3 scripts/build_readme.py
+git add README.md
